@@ -110,6 +110,8 @@ sendjs.create({
 * sendjs.get(url,data,config)
 * sendjs.post(url,data,config)
 * sendjs.ajax({...config...})
+* sendjs.downClient(url,data,config)
+* sendjs.upClient(url,data,config)
 
 ## Request Config
 ```js

@@ -2,7 +2,7 @@
   "name": "sendjs",
   "main": "dist/sendjs.min.js",
   "description": "http request",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "author": "wqb2017",
   "license": "MIT",
   "private": false,

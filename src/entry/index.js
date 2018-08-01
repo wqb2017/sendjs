@@ -1,7 +1,8 @@
 import Command from '../core/command';
 import defaultConfig from '../config';
 import * as Utils from '../helpers/utils';
-import transformServer from '../core/transform/server';
+import mergeConfig from './mergeConfig';
+import transformRequest from './../core/transform/request';
 let sendjs = {};
 /**
  * create entry
@@ -26,7 +27,7 @@ sendjs.create = function(options) {
   this.defaults = Utils.merge(defaultConfig, options);
 };
 /**
- * ajax
+ * ajax method
  * @param {*} options
  */
 sendjs.ajax = function(options) {
@@ -36,27 +37,61 @@ sendjs.ajax = function(options) {
   );
 };
 /**
- * post
+ * post method
  * @param {string} url
  * @param {object} data
  */
-// sendjs.post = function(url, data) {
 sendjs.post = function(url = '', data = {}, config = {}) {
   return this.ajax(
-    Utils.merge(config, {
-      type: 'post',
+    mergeConfig({
+      baseUrl: this.defaults.baseUrl,
+      url: url,
       data: data,
-      baseUrl: transformServer(this.defaults.baseUrl, url)
+      config: config
     })
   );
 };
+/**
+ * get method
+ * @param {string} url
+ * @param {object} data
+ * @param {object} config
+ */
 sendjs.get = function(url = '', data = {}, config = {}) {
   return this.ajax(
-    Utils.merge(config, {
-      type: 'get',
+    mergeConfig({
+      baseUrl: this.defaults.baseUrl,
+      url: url,
       data: data,
-      baseUrl: transformServer(this.defaults.baseUrl, url)
+      config: config
     })
   );
+};
+/**
+ * downClient method
+ * @param {*} url
+ * @param {*} data
+ * @param {*} config
+ */
+sendjs.downClient = function(url = '', data = {}, config = {}) {
+  const ajaxConfig = Utils.merge(
+    this.defaults,
+    mergeConfig({
+      baseUrl: this.defaults.baseUrl,
+      url: url,
+      data: data,
+      config: config
+    })
+  );
+  window.open(`${ajaxConfig.baseUrl}${transformRequest(ajaxConfig)}`);
+};
+/**
+ * upClient method
+ * @param {*} url
+ * @param {*} data
+ * @param {*} config
+ */
+sendjs.upClient = function(url = '', data = {}, config = {}) {
+  this.post(url, data, config);
 };
 export default sendjs;

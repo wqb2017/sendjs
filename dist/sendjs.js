@@ -504,6 +504,21 @@
     return serverUrl;
   }
 
+  /**
+   * merge config
+   *
+   * @export
+   * @param {any} opts
+   * @returns
+   */
+  function mergeConfig(opts) {
+    return merge(opts.config, {
+      type: 'post',
+      data: opts.data,
+      baseUrl: transformServer(opts.baseUrl, opts.url)
+    });
+  }
+
   let sendjs = {};
   /**
    * create entry
@@ -528,7 +543,7 @@
     this.defaults = merge(defaultConfig, options);
   };
   /**
-   * ajax
+   * ajax method
    * @param {*} options
    */
   sendjs.ajax = function(options) {
@@ -538,28 +553,62 @@
     );
   };
   /**
-   * post
+   * post method
    * @param {string} url
    * @param {object} data
    */
-  // sendjs.post = function(url, data) {
   sendjs.post = function(url = '', data = {}, config = {}) {
     return this.ajax(
-      merge(config, {
-        type: 'post',
+      mergeConfig({
+        baseUrl: this.defaults.baseUrl,
+        url: url,
         data: data,
-        baseUrl: transformServer(this.defaults.baseUrl, url)
+        config: config
       })
     );
   };
+  /**
+   * get method
+   * @param {string} url
+   * @param {object} data
+   * @param {object} config
+   */
   sendjs.get = function(url = '', data = {}, config = {}) {
     return this.ajax(
-      merge(config, {
-        type: 'get',
+      mergeConfig({
+        baseUrl: this.defaults.baseUrl,
+        url: url,
         data: data,
-        baseUrl: transformServer(this.defaults.baseUrl, url)
+        config: config
       })
     );
+  };
+  /**
+   * downClient method
+   * @param {*} url
+   * @param {*} data
+   * @param {*} config
+   */
+  sendjs.downClient = function(url = '', data = {}, config = {}) {
+    const ajaxConfig = merge(
+      this.defaults,
+      mergeConfig({
+        baseUrl: this.defaults.baseUrl,
+        url: url,
+        data: data,
+        config: config
+      })
+    );
+    window.open(`${ajaxConfig.baseUrl}${transformRequest(ajaxConfig)}`);
+  };
+  /**
+   * upClient method
+   * @param {*} url
+   * @param {*} data
+   * @param {*} config
+   */
+  sendjs.upClient = function(url = '', data = {}, config = {}) {
+    this.post(url, data, config);
   };
 
   return sendjs;
