@@ -1,5 +1,4 @@
-import { promises } from 'fs';
-
+import transformResponse from './../core/transform/response';
 /**
  * request
  * 1. create http
@@ -18,7 +17,7 @@ export default function createHttpRequest(args) {
     );
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        resolve(JSON.parse(xhr.responseText));
+        resolve(transformResponse(xhr.responseText));
       }
     };
     xhr.onerror = function() {

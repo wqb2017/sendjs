@@ -2,7 +2,10 @@
   "name": "sendjs",
   "main": "dist/sendjs.min.js",
   "description": "http request",
-  "version": "1.0.0",
+  "version": "1.0.6",
+  "author": "wqb2017",
+  "license": "MIT",
+  "private": false,
   "scripts": {
     "dev": "rollup --config config/rollup.config.dev.js -w",
     "build:umd": "rollup --config config/rollup.config.pro.js --environment FORMAT:umd",
@@ -16,12 +19,10 @@
   },
   "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
   "keywords": ["sendjs", "xhr", "http", "ajax", "promise", "node"],
+  "homepage": "https://github.com/wqb2017/sendjs/blob/master/README.md",
   "bugs": {
     "url": "https://github.com/wqb2017/sendjs/issues"
   },
-  "homepage": "https://github.com/wqb2017/sendjs/blob/master/README.md",
-  "author": "wqb2017",
-  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
