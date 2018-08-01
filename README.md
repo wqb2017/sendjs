@@ -1,5 +1,15 @@
 # sendjs
 
+sendjs is a request library
+
+## install
+
+npm install sendjs --save
+
+## import
+
+import sendjs from 'sendjs';
+
 ## Example
 
 * get methods sendjs.get(url,data,config).then().then().catch()

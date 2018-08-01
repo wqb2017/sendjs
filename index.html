@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>sendjs</title>
+  <style>
+    .wrapper{
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
-  <script src="./dist/sendjs.min.js"></script>
-  <script src="./src/demo/index.js"></script>
+  <div class="wrapper">
+    <h1>sendjs is http request</h1>
+    <h3>sendjs app</h3>
+    <div id="api"></div>
+    <h3>sendjs returned value</h3>
+    <div id="res"></div>
+  </div>
+  <script src="./dist/sendjs.js"></script>
+  <script>
+    sendjs.create({
+      baseUrl: 'http://192.168.9.86:8006/api/',
+      data: {
+        ve: 2,
+        clientType: 'html',
+        module: 'portal',
+        service: 'Portal',
+        method: 'access',
+        ms: new Date().getTime()
+      }
+    });
+    document.getElementById("api").innerHTML = JSON.stringify(Object.keys(sendjs));
+    sendjs.post('data', {
+      age: 24,
+      name: 'sendjs',
+    }).then(res => {
+      document.getElementById("res").innerHTML = JSON.stringify(res);
+    });
+  </script>
 </body>
+
 </html>
